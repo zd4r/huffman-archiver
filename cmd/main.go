@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"encoding/json"
@@ -8,7 +8,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/zd4r/huffman"
+	huffman2 "github.com/zd4r/internal/huffman"
 )
 
 // chooseAction - Выобр действия: архивация / разархивация
@@ -62,7 +62,7 @@ func startArchiver() error {
 				fileExt := filepath.Ext(f.Name())
 
 				// Архивируем полученный файл
-				packedFile, encodingDict, err := huffman.Pack(file)
+				packedFile, encodingDict, err := huffman2.Pack(file)
 				if err != nil {
 					return fmt.Errorf("error packing file: %v", err)
 				}
@@ -99,7 +99,7 @@ func startArchiver() error {
 				fmt.Printf("Архивация файла %v выполнена\n", f.Name())
 
 				// Разархивируем файл
-				unpackedFile, err := huffman.Unpack(packedFile, NewEncodingDictStruct.NewEncodingDict)
+				unpackedFile, err := huffman2.Unpack(packedFile, NewEncodingDictStruct.NewEncodingDict)
 				if err != nil {
 					return fmt.Errorf("error upacking file: %v", err)
 				}
@@ -143,7 +143,7 @@ func startArchiver() error {
 		fileExt := filepath.Ext(f.Name())
 
 		// Архивируем полученный файл
-		packedFile, encodingDict, err := huffman.Pack(file)
+		packedFile, encodingDict, err := huffman2.Pack(file)
 		if err != nil {
 			return fmt.Errorf("error packing file: %v", err)
 		}
@@ -226,7 +226,7 @@ func startArchiver() error {
 		fileNameWithoutExtension := f.Name()[:len(f.Name())-len(fileExt)]
 
 		// Разархивирование файла
-		unpackedFile, err := huffman.Unpack(file, NewEncodingDictStruct.NewEncodingDict)
+		unpackedFile, err := huffman2.Unpack(file, NewEncodingDictStruct.NewEncodingDict)
 		if err != nil {
 			return fmt.Errorf("error upacking file: %v", err)
 		}
